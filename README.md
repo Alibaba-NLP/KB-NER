@@ -362,4 +362,4 @@ Start from the great repo [flair version 0.4.3](https://github.com/flairNLP/flai
 
 Feel free to email any questions or comments to issues or to [Xinyu Wang](http://wangxinyu0922.github.io/).
 
-For questions about the knowledge retrieval module, you can also ask [Yongliang Shen](syl@zju.edu.cn) and [Jiong Cai](caijiong@shanghaitech.edu.cn)
+For questions about the knowledge retrieval module, you can also ask [Yongliang Shen](mailto:syl@zju.edu.cn) and [Jiong Cai](mailto:caijiong@shanghaitech.edu.cn)
