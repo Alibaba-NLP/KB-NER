@@ -1,0 +1,111 @@
+Controller:
+  model_structure: null
+MFVI:
+  hexa_rank: 150
+  hexa_std: 1
+  iterations: 3
+  normalize_weight: true
+  quad_rank: 150
+  quad_std: 1
+  tag_dim: 150
+  use_hexalinear: false
+  use_quadrilinear: false
+  use_second_order: false
+  use_third_order: false
+  window_size: 1
+ReinforcementTrainer:
+  assign_doc_id: true
+  controller_learning_rate: 0.1
+  controller_optimizer: SGD
+  distill_mode: false
+  optimizer: SGD
+  pretrained_file_dict:
+    /home/yongjiang.jy/.cache/torch/transformers/bert-base-cased: bert-base-cased.hdf5
+    bert-base-multilingual-cased: bert-base-multilingual-cased.hdf5
+    bert-large-cased: bert-large-cased.hdf5
+  sentence_level_batch: true
+  train_with_doc: true
+anneal_factor: 2
+ast:
+  Corpus: SEMEVAL16-TR:SEMEVAL16-ES:SEMEVAL16-NL:SEMEVAL16-EN:SEMEVAL16-RU
+atis:
+  Corpus: ATIS-EN:ATIS-TR:ATIS-HI
+chunk:
+  Corpus: CONLL_03:CONLL_03_GERMAN
+embeddings:
+  ELMoEmbeddings-0:
+    model: original
+    # options_file: elmo_2x4096_512_2048cnn_2xhighway_options.json
+    # weight_file: elmo_2x4096_512_2048cnn_2xhighway_weights.hdf5
+  FastWordEmbeddings-0:
+    embeddings: en
+    freeze: true
+  FlairEmbeddings-0:
+    model: en-forward
+  FlairEmbeddings-1:
+    model: en-backward
+  FlairEmbeddings-2:
+    model: multi-forward
+  FlairEmbeddings-3:
+    model: multi-backward
+  TransformerWordEmbeddings-0:
+    layers: '-1'
+    model: xlnet-large-cased
+    embedding_name: /home/yongjiang.jy/.flair/embeddings/xlnet-first-docv2_10epoch_1batch_4accumulate_0.000005lr_10000lrrate_eng_monolingual_nocrf_fast_norelearn_sentbatch_sentloss_finetune_nodev_saving_ner4/xlnet-large-cased
+    pooling_operation: first
+    v2_doc: true
+  TransformerWordEmbeddings-1:
+    layers: '-1'
+    model: xlm-roberta-large
+    embedding_name: /home/yongjiang.jy/.flair/embeddings/xlmr-first-docv2_10epoch_1batch_4accumulate_0.000005lr_10000lrrate_eng_monolingual_nocrf_fast_norelearn_sentbatch_sentloss_finetune_nodev_saving_ner3/xlm-roberta-large
+    pooling_operation: first
+    v2_doc: true
+  TransformerWordEmbeddings-2:
+    layers: '-1'
+    model: roberta-large
+    embedding_name: /home/yongjiang.jy/.flair/embeddings/en-xlmr-first-docv2_10epoch_1batch_4accumulate_0.000005lr_10000lrrate_eng_monolingual_nocrf_fast_norelearn_sentbatch_sentloss_finetune_nodev_saving_ner5/roberta-large
+    pooling_operation: first
+    v2_doc: true
+  TransformerWordEmbeddings-3:
+    layers: -1,-2,-3,-4
+    model: bert-large-cased
+    pooling_operation: first
+  TransformerWordEmbeddings-4:
+    layers: -1,-2,-3,-4
+    model: bert-base-cased
+    embedding_name: /home/yongjiang.jy/.cache/torch/transformers/bert-base-cased
+    pooling_operation: first
+  TransformerWordEmbeddings-5:
+    layers: -1,-2,-3,-4
+    model: bert-base-multilingual-cased
+    pooling_operation: first
+interpolation: 0.5
+is_teacher_list: true
+model:
+  FastSequenceTagger:
+    crf_attention: false
+    dropout: 0.0
+    hidden_size: 800
+    sentence_loss: true
+    use_crf: true
+model_name: xlnet-task-docv2_en-xlmr-task-tuned-docv2_en-xlmr-task-docv2_elmo_bert-four-large-pred_bert-four-old-pred_multi-bert-four-pred_word_flair_mflair_150epoch_32batch_0.1lr_800hidden_eng_crf_reinforce_freeze_sentbatch_5patience_nodev_ner4
+ner:
+  Corpus: CONLL_03_ENGLISH
+  tag_dictionary: resources/taggers/ner_tags.pkl
+target_dir: resources/taggers/
+targets: ner
+teacher_annealing: false
+train:
+  controller_momentum: 0.9
+  learning_rate: 0.1
+  max_episodes: 30
+  max_epochs: 150
+  max_epochs_without_improvement: 25
+  mini_batch_size: 32
+  monitor_test: false
+  patience: 5
+  save_final_model: false
+  train_with_dev: false
+  true_reshuffle: false
+  use_warmup: false
+trainer: ReinforcementTrainer
