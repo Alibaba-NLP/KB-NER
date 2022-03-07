@@ -63,7 +63,7 @@ Our model predictions submitted at the test phase: [OneDrive](https://1drv.ms/u/
 | HI-Hindi | HI-Hindi_conll_rank_eos_doc_full_wiki_v3_sentence | HI-Hindi_conll_rank_eos_doc_full_wiki_v3_test_sentence |
 | BN-Bangla | BN-Bangla_conll_rank_eos_doc_full_wiki_v3_sentence | BN-Bangla_conll_rank_eos_doc_full_wiki_v3_test_sentence |
 | MULTI-Multilingual | All monolingual datasets `*_conll_rank_eos_doc_full_wiki_v3` | MULTI_Multilingual_conll_rank_eos_doc_full_wiki_v3_test_langwiki |
-| MIX-Code_mixed | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v3_sentence_withent | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v3_test_sentence_withent |
+| MIX-Code_mixed | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v3_sentence | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v3_test_sentence |
 | MIX-Code_mixed (Iterative) | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v4_sentence_withent | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v4_test_sentence_withent |
 
 The meanning of the suffixes in the folder names are listed as follows:
