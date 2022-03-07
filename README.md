@@ -296,7 +296,7 @@ train:
 ---
 ## Config File
 
-You can find the description of each part in the config file at [here](https://github.com/Alibaba-NLP/CLNER#config-file)
+You can find the description of each part in the config file at [here](https://github.com/Alibaba-NLP/CLNER#config-file).
 
 ## Citing Us
 If you feel the code helpful, please cite:
