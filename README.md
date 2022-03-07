@@ -4,7 +4,9 @@ The code is for the winner system (DAMO-NLP) of SemEval 2022 MultiCoNER shared t
 
 KB-NER is a knowledge-based system, where we build a multilingual knowledge base based on Wikipedia to provide related context information to the NER model. 
 
-Image here
+![image](https://user-images.githubusercontent.com/17926734/157019580-ec411abe-92ff-4144-a591-78b4b1d2f26c.png)![image](https://user-images.githubusercontent.com/17926734/157019621-b3ff9734-f669-4c9b-80eb-8a70c75fd6fc.png)
+
+
 
 
 ## Guide
