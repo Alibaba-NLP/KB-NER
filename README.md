@@ -141,7 +141,7 @@ CUDA_VISIBLE_DEVICES=0 python -u train_with_teacher.py --config config/xlmr-larg
 CUDA_VISIBLE_DEVICES=0 python -u train_with_teacher.py --config config/xlmr-large-pretuned-tuned-wiki-full-v4-first_100epoch_1batch_4accumulate_0.000005lr_10000lrrate_mix_monolingual_crf_fast_norelearn_sentbatch_sentloss_withdev_finetune_saving_amz_doc_wiki_v4_sentence_withent_ner30.yaml --parse --keep_order --target_dir MIX_Code_mixed_conll_rank_eos_doc_full_wiki_v4_test_sentence_withent --num_columns 4 --batch_size 32 --output_dir semeval2022_predictions 
 ```
 
---
+---
 
 #### Training the monolingual models
 
@@ -202,7 +202,7 @@ TODO
 
 #### Context Processing
 
---
+---
 
 ### Multi-stage Fine-tuning
 
@@ -235,7 +235,7 @@ Run the model training:
 CUDA_VISIBLE_DEVICES=0 python train.py --config config/xlmr-large-pretuned-tuned-wiki-full-first_10epoch_1batch_4accumulate_0.000005lr_10000lrrate_en_monolingual_crf_fast_norelearn_sentbatch_sentloss_nodev_finetune_saving_amz_doc_wiki_v3_ner20.yaml
 ```
 
---
+---
 
 ### Majority Voting Ensemble
 
@@ -244,7 +244,7 @@ We provide an example of majority voting ensemble. Download the all English pred
 python ensemble_prediction.py 
 ```
 
---
+---
 
 ### (Optional) CE and ACE Models
 
