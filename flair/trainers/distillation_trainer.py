@@ -672,7 +672,22 @@ class ModelDistiller(ModelTrainer):
 				sentence.doc = doc_sentence_dict[doc_key]
 				sentence.doc_pos = len(doc_sentence_dict[doc_key])-1
 		return doc_sentence_dict
-
+	def assign_ext_context_doc(self, corpus):
+		for data_lists in [self.corpus.train_list, self.corpus.dev_list, self.corpus.test_list]:
+			for data_list in data_lists:
+				for sent_id, sentence in enumerate(data_list):
+					# sentence.copy()
+					words = [word.text for word in sentence]
+					sentence.doc_sent = copy.deepcopy(sentence)
+					if '<EOS>' in words:
+						eos_id = words.index('<EOS>')
+						sentence.chunk_sentence(0,eos_id)
+					sentence.doc_pos = 0
+					
+		self.corpus._train: FlairDataset = ConcatDataset(self.corpus.train_list)
+		self.corpus._dev: FlairDataset = ConcatDataset(self.corpus.dev_list)
+		self.corpus._test: FlairDataset = ConcatDataset(self.corpus.test_list)
+		return
 	@property
 	def interpolation(self):
 		try:
@@ -1133,7 +1148,7 @@ class ModelDistiller(ModelTrainer):
 		log_line(log)
 
 		return Path(learning_rate_tsv)
-	def gpu_friendly_assign_embedding(self,loaders, selection = None):
+	def gpu_friendly_assign_embedding(self,loaders, selection = None, one_by_one = False):
 		# pdb.set_trace()
 		# torch.cuda.empty_cache()
 		embedlist = sorted([(embedding.name, embedding) for embedding in self.model.embeddings.embeddings], key = lambda x: x[0])
@@ -1153,7 +1168,7 @@ class ModelDistiller(ModelTrainer):
 						log.info(f"{embedding.name} is not selected, Skipping")
 						continue
 				embedding.to(flair.device)
-				if 'elmo' in embedding.name:
+				if 'elmo' in embedding.name and (not hasattr(embedding,'is_hit_elmo') or embedding.is_hit_elmo == False):
 					# embedding.reset_elmo()
 					# continue
 					# pdb.set_trace()
@@ -1164,34 +1179,37 @@ class ModelDistiller(ModelTrainer):
 						embedding.ee.elmo_bilm._elmo_lstm._states[idx]=embedding.ee.elmo_bilm._elmo_lstm._states[idx].to(flair.device)
 				for loader in loaders:
 					for sentences in loader:
-						lengths: List[int] = [len(sentence.tokens) for sentence in sentences]
-						longest_token_sequence_in_batch: int = max(lengths)
+						# lengths: List[int] = [len(sentence.tokens) for sentence in sentences]
+						# longest_token_sequence_in_batch: int = max(lengths)
+						if one_by_one:
+							for sentence in sentences:
+								embedding.embed([sentence])
 						# if longest_token_sequence_in_batch>100:
 						#   pdb.set_trace()
 						embedding.embed(sentences)
 						store_embeddings(sentences, self.embeddings_storage_mode)
 				embedding=embedding.to('cpu')
-				if 'elmo' in embedding.name:
+				if 'elmo' in embedding.name and (not hasattr(embedding,'is_hit_elmo') or embedding.is_hit_elmo == False):
 					embedding.ee.elmo_bilm.to('cpu')
 			else:
 				embedding=embedding.to(flair.device)
-		# bug
-		if hasattr(self.model,'remove_x') and self.model.remove_x:
-			for loader in loaders:
-				loader_data=[]
-				for sentences in loader:
-					new_sentences=[]
-					for sentence in sentences:
-						gold_tags = [token.tags[self.model.tag_type].value for token in sentence]
-						gold_span = []
-						# pdb.set_trace()
-						for tag_id, tag in enumerate(gold_tags):
-							if tag != 'S-X':
-								gold_span.append(tag_id)
-						# pdb.set_trace()
-						# sentence=sentence[gold_span[0]:gold_span[-1]+1]
-						sentence.chunk_sentence(gold_span[0],gold_span[-1]+1)
-				loader.assign_tags(self.model.tag_type,self.model.tag_dictionary)
+		# # bug
+		# if hasattr(self.model,'remove_x') and self.model.remove_x:
+		# 	for loader in loaders:
+		# 		loader_data=[]
+		# 		for sentences in loader:
+		# 			new_sentences=[]
+		# 			for sentence in sentences:
+		# 				gold_tags = [token.tags[self.model.tag_type].value for token in sentence]
+		# 				gold_span = []
+		# 				# pdb.set_trace()
+		# 				for tag_id, tag in enumerate(gold_tags):
+		# 					if tag != 'S-X':
+		# 						gold_span.append(tag_id)
+		# 				# pdb.set_trace()
+		# 				# sentence=sentence[gold_span[0]:gold_span[-1]+1]
+		# 				sentence.chunk_sentence(gold_span[0],gold_span[-1]+1)
+		# 		loader.assign_tags(self.model.tag_type,self.model.tag_dictionary)
 		# torch.cuda.empty_cache()
 		log.info("Finished Embeddings Assignments")
 		return 

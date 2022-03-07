@@ -13,6 +13,7 @@ from flair.models.biaffine_attention import BiaffineAttention, BiaffineFunction
 from flair.models.dependency_model import generate_tree, convert_score_back
 from torch.optim.lr_scheduler import ExponentialLR, LambdaLR
 import random
+import os
 import copy
 from flair.parser.utils.alg import crf
 import h5py
@@ -73,6 +74,7 @@ class ModelFinetuner(ModelDistiller):
 		train_with_doc: bool = False,
 		pretrained_file_dict: dict = {},
 		sentence_level_pretrained_data: bool = False,
+		assign_doc_for_ext_context: bool = False,
 	):
 		"""
 		Initialize a model trainer
@@ -368,6 +370,11 @@ class ModelFinetuner(ModelDistiller):
 			elif (base_path / "final-model.pt").exists():
 				self.model = self.model.load(base_path / "final-model.pt")
 				log.info(f"Using pretrained final model at {base_path}")
+		if assign_doc_for_ext_context:
+			if not self.model.remove_x:
+				pdb.set_trace()
+				assert "there is no doc for the data!"
+			self.assign_ext_context_doc(self.corpus)
 
 	def train(
 		self,
@@ -380,7 +387,7 @@ class ModelFinetuner(ModelDistiller):
 		patience: int = 10,
 		min_learning_rate: float = 5e-9,
 		train_with_dev: bool = False,
-		macro_avg: bool = True,
+		dataset_level_macro_avg: bool = True,
 		monitor_train: bool = False,
 		monitor_test: bool = False,
 		embeddings_storage_mode: str = "cpu",
@@ -424,6 +431,8 @@ class ModelFinetuner(ModelDistiller):
 		freezing: bool = False,
 		save_finetuned_embedding: bool = False,
 		multi_view_rate: float = 0.5,
+		one_by_one: bool = False,
+		select_model_by_macro: bool = False, # for semeval shared task
 		**kwargs,
 	) -> dict:
 
@@ -632,7 +641,7 @@ class ModelFinetuner(ModelDistiller):
 		if self.distill_mode:
 			batch_loader=self.resort(batch_loader,is_crf=self.model.distill_crf, is_posterior = self.model.distill_posterior or self.model.distill_exact, is_token_att = self.model.token_level_attention)
 		if not train_with_dev:
-			if macro_avg:
+			if dataset_level_macro_avg:
 				dev_loaders=[ColumnDataLoader(list(subcorpus),eval_mini_batch_size,use_bert=self.use_bert,tokenizer=self.bert_tokenizer, sort_data=sort_data, model = self.model, sentence_level_batch = self.sentence_level_batch) \
 							 for subcorpus in self.corpus.dev_list]
 				for loader in dev_loaders:
@@ -734,13 +743,16 @@ class ModelFinetuner(ModelDistiller):
 				else:
 					language_weight=self.language_weight
 				current_result, dev_loss = self.model.evaluate_langatt(loader,language_weight,embeddings_storage_mode=embeddings_storage_mode,)
-				result_dict[self.corpus.targets[index]]=current_result.main_score*100
+				if select_model_by_macro:
+					result_dict[self.corpus.targets[index]]=current_result.macro_score*100
+				else:
+					result_dict[self.corpus.targets[index]]=current_result.main_score*100
 				print_sent+=self.corpus.targets[index]+'\t'+f'{result_dict[self.corpus.targets[index]]:.2f}'+'\t'
 				loss_list.append(dev_loss)
 				# log.info(current_result.log_line)
 				# log.info(current_result.detailed_results)
 			mavg=sum(result_dict.values())/len(result_dict)
-			log.info('Macro Average: '+f'{mavg:.2f}'+'\tMacro avg loss: ' + f'{((sum(loss_list)/len(loss_list)).item()):.2f}' +  print_sent)
+			log.info('Dataset-Level Macro Average: '+f'{mavg:.2f}'+'\tDataset-Level Macro avg loss: ' + f'{((sum(loss_list)/len(loss_list)).item()):.2f}' +  print_sent)
 
 		
 		if fine_tune_mode:
@@ -752,12 +764,12 @@ class ModelFinetuner(ModelDistiller):
 			else:
 				loaders = [batch_loader]
 			if not train_with_dev:
-				if macro_avg:
-					self.gpu_friendly_assign_embedding(loaders+dev_loaders)
+				if dataset_level_macro_avg:
+					self.gpu_friendly_assign_embedding(loaders+dev_loaders, one_by_one = one_by_one)
 				else:
-					self.gpu_friendly_assign_embedding(loaders+[dev_loader])
+					self.gpu_friendly_assign_embedding(loaders+[dev_loader], one_by_one = one_by_one)
 			else:
-				self.gpu_friendly_assign_embedding(loaders)
+				self.gpu_friendly_assign_embedding(loaders, one_by_one = one_by_one)
 			
 		try:
 			previous_learning_rate = learning_rate
@@ -1082,10 +1094,10 @@ class ModelFinetuner(ModelDistiller):
 					# depending on memory mode, embeddings are moved to CPU, GPU or deleted
 					store_embeddings(self.corpus.train, embeddings_storage_mode)
 					if embeddings_storage_mode == "none" and hasattr(self.corpus.train,'features'):
-							del self.corpus.train.features
+							self.corpus.train.features = {}
 				log_line(log)
 				if log_dev:
-					if macro_avg:
+					if dataset_level_macro_avg:
 						
 						if type(self.corpus) is ListCorpus:
 							result_dict={}
@@ -1100,7 +1112,10 @@ class ModelFinetuner(ModelDistiller):
 									loader,
 									embeddings_storage_mode=embeddings_storage_mode,
 								)
-								result_dict[self.corpus.targets[index]]=current_result.main_score*100
+								if select_model_by_macro:
+									result_dict[self.corpus.targets[index]]=current_result.macro_score*100
+								else:
+									result_dict[self.corpus.targets[index]]=current_result.main_score*100
 								print_sent+=self.corpus.targets[index]+'\t'+f'{result_dict[self.corpus.targets[index]]:.2f}'+'\t'
 								loss_list.append(dev_loss)
 								# log.info(current_result.log_line)
@@ -1108,7 +1123,7 @@ class ModelFinetuner(ModelDistiller):
 						else:
 							assert 0, 'not defined!'
 						mavg=sum(result_dict.values())/len(result_dict)
-						log.info('Macro Average: '+f'{mavg:.2f}'+'\tMacro avg loss: ' + f'{((sum(loss_list)/len(loss_list)).item()):.2f}' +  print_sent)
+						log.info('Dataset-Level Macro Average: '+f'{mavg:.2f}'+'\tDataset-Level Macro avg loss: ' + f'{((sum(loss_list)/len(loss_list)).item()):.2f}' +  print_sent)
 						dev_score_history.append(mavg)
 						dev_loss_history.append((sum(loss_list)/len(loss_list)).item())
 						
@@ -1118,25 +1133,39 @@ class ModelFinetuner(ModelDistiller):
 							dev_loader,
 							embeddings_storage_mode=embeddings_storage_mode,
 						)
-						result_line += f"\t{dev_loss}\t{dev_eval_result.log_line}"
-						log.info(
-							f"DEV : loss {dev_loss} - score {dev_eval_result.main_score}"
-						)
 						# calculate scores using dev data if available
 						# append dev score to score history
-						dev_score_history.append(dev_eval_result.main_score)
+						if select_model_by_macro:
+							dev_score_history.append(dev_eval_result.macro_score)
+							current_score = dev_eval_result.macro_score
+							result_line += f"\t{dev_loss}\t{dev_eval_result.log_line}"
+							log.info(
+								f"DEV : loss {dev_loss} - score {dev_eval_result.macro_score}"
+							)
+						else:
+							dev_score_history.append(dev_eval_result.main_score)
+							current_score = dev_eval_result.main_score
+							result_line += f"\t{dev_loss}\t{dev_eval_result.log_line}"
+							log.info(
+								f"DEV : loss {dev_loss} - score {dev_eval_result.main_score}"
+							)
 						dev_loss_history.append(dev_loss)
 
-						current_score = dev_eval_result.main_score
+
 					# depending on memory mode, embeddings are moved to CPU, GPU or deleted
 					store_embeddings(self.corpus.dev, embeddings_storage_mode)
 					if embeddings_storage_mode == "none" and hasattr(self.corpus.dev,'features'):
-						del self.corpus.dev.features
+						self.corpus.dev.features = {}
 					if self.use_tensorboard:
 						writer.add_scalar("dev_loss", dev_loss, epoch + 1)
-						writer.add_scalar(
-							"dev_score", dev_eval_result.main_score, epoch + 1
-						)
+						if select_model_by_macro:
+							writer.add_scalar(
+								"dev_score", dev_eval_result.macro_score, epoch + 1
+							)
+						else:
+							writer.add_scalar(
+								"dev_score", dev_eval_result.main_score, epoch + 1
+							)
 				log_line(log)
 				if log_test:
 					test_eval_result, test_loss = self.model.evaluate(
@@ -1145,19 +1174,29 @@ class ModelFinetuner(ModelDistiller):
 						embeddings_storage_mode=embeddings_storage_mode,
 					)
 					result_line += f"\t{test_loss}\t{test_eval_result.log_line}"
-					log.info(
-						f"TEST : loss {test_loss} - score {test_eval_result.main_score}"
-					)
+					if select_model_by_macro:
+						log.info(
+							f"TEST : loss {test_loss} - score {test_eval_result.macro_score}"
+						)
+					else:
+						log.info(
+							f"TEST : loss {test_loss} - score {test_eval_result.main_score}"
+						)
 
 					# depending on memory mode, embeddings are moved to CPU, GPU or deleted
 					store_embeddings(self.corpus.test, embeddings_storage_mode)
 					if embeddings_storage_mode == "none" and hasattr(self.corpus.test,'features'):
-						del self.corpus.test.features
+						self.corpus.test.features = {}
 					if self.use_tensorboard:
 						writer.add_scalar("test_loss", test_loss, epoch + 1)
-						writer.add_scalar(
-							"test_score", test_eval_result.main_score, epoch + 1
-						)
+						if select_model_by_macro:
+							writer.add_scalar(
+								"test_score", test_eval_result.macro_score, epoch + 1
+							)
+						else:
+							writer.add_scalar(
+								"test_score", test_eval_result.main_score, epoch + 1
+							)
 					log.info(test_eval_result.log_line)
 					log.info(test_eval_result.detailed_results)
 					if type(self.corpus) is MultiCorpus:
@@ -1286,7 +1325,7 @@ class ModelFinetuner(ModelDistiller):
 
 		# test best model if test data is present
 		if self.corpus.test:
-			final_score = self.final_test(base_path, eval_mini_batch_size, num_workers)
+			final_score = self.final_test(base_path, eval_mini_batch_size, num_workers, one_by_one = one_by_one)
 		else:
 			final_score = 0
 			log.info("Test data not provided setting final score to 0")
@@ -2095,7 +2134,7 @@ class ModelFinetuner(ModelDistiller):
 			# print('total_length: ',total_length)
 		
 	def final_test(
-		self, base_path: Path, eval_mini_batch_size: int, num_workers: int = 8, overall_test: bool = True, quiet_mode: bool = False, nocrf: bool = False, predict_posterior: bool = False, debug: bool = False, keep_embedding: int = -1, sort_data=False,
+		self, base_path: Path, eval_mini_batch_size: int, num_workers: int = 8, overall_test: bool = True, quiet_mode: bool = False, nocrf: bool = False, predict_posterior: bool = False, debug: bool = False, keep_embedding: int = -1, sort_data=False, one_by_one = False,
 	):
 
 		log_line(log)
@@ -2133,7 +2172,7 @@ class ModelFinetuner(ModelDistiller):
 			loader.assign_tags(self.model.tag_type,self.model.tag_dictionary)
 			with torch.no_grad():
 				# pdb.set_trace()
-				self.gpu_friendly_assign_embedding([loader])
+				self.gpu_friendly_assign_embedding([loader], one_by_one = one_by_one)
 			for x in sorted(loader[0].features.keys()):
 				print(x)
 			test_results, test_loss = self.model.evaluate(
@@ -2175,7 +2214,7 @@ class ModelFinetuner(ModelDistiller):
 				loader=ColumnDataLoader(list(subcorpus.test),eval_mini_batch_size,use_bert=self.use_bert,tokenizer=self.bert_tokenizer, model = self.model, sentence_level_batch = self.sentence_level_batch, sort_data=sort_data)
 				loader.assign_tags(self.model.tag_type,self.model.tag_dictionary)
 				with torch.no_grad():
-					self.gpu_friendly_assign_embedding([loader])
+					self.gpu_friendly_assign_embedding([loader], one_by_one = one_by_one)
 				current_result, test_loss = self.model.evaluate(
 					loader,
 					out_path=base_path / f"{subcorpus.name}-test.tsv",
@@ -2206,7 +2245,7 @@ class ModelFinetuner(ModelDistiller):
 				loader=ColumnDataLoader(list(subcorpus),eval_mini_batch_size,use_bert=self.use_bert,tokenizer=self.bert_tokenizer, model = self.model, sentence_level_batch = self.sentence_level_batch, sort_data=sort_data)
 				loader.assign_tags(self.model.tag_type,self.model.tag_dictionary)
 				with torch.no_grad():
-					self.gpu_friendly_assign_embedding([loader])
+					self.gpu_friendly_assign_embedding([loader], one_by_one = one_by_one)
 				current_result, test_loss = self.model.evaluate(
 					loader,
 					out_path=base_path / f"{self.corpus.targets[index]}-test.tsv",
