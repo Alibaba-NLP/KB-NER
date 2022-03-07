@@ -330,7 +330,7 @@ class ConfigParser:
 				current_dataset=getattr(datasets,corpus)()
 			elif 'ColumnCorpus' in corpus or 'UniversalDependenciesCorpus' in corpus:
 				if '-' in corpus:
-					corpus_name,idx=corpus.split('-')
+					corpus_name,idx=corpus.split('-',1)
 				else:
 					corpus_name = corpus
 				current_dataset=getattr(datasets,corpus_name)(**self.config[self.target][corpus])
@@ -348,7 +348,7 @@ class ConfigParser:
 		for corpus in self.config['TRC']:
 			if 'ColumnCorpus' in corpus:
 				if '-' in corpus:
-					corpus_name,idx=corpus.split('-')
+					corpus_name,idx=corpus.split('-',1)
 				else:
 					corpus_name = corpus
 				current_dataset=getattr(datasets,corpus_name)(**self.config['TRC'][corpus])
