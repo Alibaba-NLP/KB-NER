@@ -6,7 +6,10 @@ KB-NER is a knowledge-based system, where we build a multilingual knowledge base
 
 <!-- ![image](https://user-images.githubusercontent.com/17926734/157019580-ec411abe-92ff-4144-a591-78b4b1d2f26c.png) ![image](https://user-images.githubusercontent.com/17926734/157019621-b3ff9734-f669-4c9b-80eb-8a70c75fd6fc.png | width=0.5\textwidth) -->
 
-<img src="https://user-images.githubusercontent.com/17926734/157019580-ec411abe-92ff-4144-a591-78b4b1d2f26c.png" width=500> <img src="https://user-images.githubusercontent.com/17926734/157019621-b3ff9734-f669-4c9b-80eb-8a70c75fd6fc.png" width=500>
+<!-- <img src="https://user-images.githubusercontent.com/17926734/157019580-ec411abe-92ff-4144-a591-78b4b1d2f26c.png" width=500> <img src="https://user-images.githubusercontent.com/17926734/157019621-b3ff9734-f669-4c9b-80eb-8a70c75fd6fc.png" width=500> -->
+
+![1646656832(1)](https://user-images.githubusercontent.com/17926734/157036466-289323ff-c57e-45d0-b960-50e12dea78e9.jpg)
+
 
 ## Guide
 
