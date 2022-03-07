@@ -65,9 +65,9 @@ Our model predictions submitted at the test phase: [OneDrive](https://1drv.ms/u/
 | MIX-Code_mixed | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v3_sentence_withent | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v3_test_sentence_withent |
 | MIX-Code_mixed (Iterative) | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v4_sentence_withent | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v4_test_sentence_withent |
 
-The meanning of the post-fixes in the folder names are listed as follows:
+The meanning of the suffixes in the folder names are listed as follows:
 
-| Post-fix | Meaning |
+| Suffix | Meaning |
 | -------------------------------  | ---  | 
 | `test` | Our test data with retrieved contexts from knowledge base|
 | `v3` | Contexts in the data are from sentence retrieval|
@@ -109,12 +109,16 @@ ColumnCorpus-EN-EnglishDOC:
     data_folder: EN-English_conll_rank_eos_doc_full_wiki_v3 # change the data_folder at here
     tag_to_bioes: ner
 ```
+
+Run:
 ```bash
 # English
 CUDA_VISIBLE_DEVICES=0 python -u train_with_teacher.py --config config/xlmr-large-pretuned-tuned-wiki-full-first_10epoch_1batch_4accumulate_0.000005lr_10000lrrate_en_monolingual_crf_fast_norelearn_sentbatch_sentloss_withdev_finetune_saving_amz_doc_wiki_v3_ner20.yaml --parse --keep_order --target_dir EN-English_conll_rank_eos_doc_full_wiki_v3_test --num_columns 4 --batch_size 32 --output_dir semeval2022_predictions 
 ```
 
 **For Multilingual**, `xlmr-large-pretuned-tuned-wiki-first_3epoch_1batch_4accumulate_0.000005lr_10000lrrate_multi_monolingual_crf_fast_norelearn_sentbatch_sentloss_withdev_finetune_saving_amz_doc_wiki_v3_ner24` is required.
+
+Run:
 ```bash
 # Multilingual
 CUDA_VISIBLE_DEVICES=0 python -u train_with_teacher.py --config config/xlmr-large-pretuned-tuned-wiki-first_3epoch_1batch_4accumulate_0.000005lr_10000lrrate_multi_monolingual_crf_fast_norelearn_sentbatch_sentloss_withdev_finetune_saving_amz_doc_wiki_v3_ner24.yaml --parse --keep_order --target_dir MULTI_Multilingual_conll_rank_eos_doc_full_wiki_v3_test_langwiki --num_columns 4 --batch_size 32 --output_dir semeval2022_predictions 
@@ -128,6 +132,7 @@ CUDA_VISIBLE_DEVICES=0 python -u train_with_teacher.py --config config/xlmr-larg
 
 The sentence-retrieval-based models are used for predict entity mentions for the iterative entity retrieval. The iterative-entity-retrieval-based models are expected to be stronger than the sentence-retrieval-based models in code-mixed.
 
+Run:
 ```bash
 # Code-mixed + Sentence Retrieval
 CUDA_VISIBLE_DEVICES=0 python -u train_with_teacher.py --config config/xlmr-large-pretuned-tuned-wiki-full-first_100epoch_1batch_4accumulate_0.000005lr_10000lrrate_mix_monolingual_crf_fast_norelearn_sentbatch_sentloss_withdev_finetune_saving_amz_doc_wiki_v3_sentence_ner40.yaml --parse --keep_order --target_dir MIX_Code_mixed_conll_rank_eos_doc_full_wiki_v3_test_sentence_withent --num_columns 4 --batch_size 32 --output_dir semeval2022_predictions 
@@ -135,6 +140,8 @@ CUDA_VISIBLE_DEVICES=0 python -u train_with_teacher.py --config config/xlmr-larg
 # Code-mixed + Iterative Entity Retrieval
 CUDA_VISIBLE_DEVICES=0 python -u train_with_teacher.py --config config/xlmr-large-pretuned-tuned-wiki-full-v4-first_100epoch_1batch_4accumulate_0.000005lr_10000lrrate_mix_monolingual_crf_fast_norelearn_sentbatch_sentloss_withdev_finetune_saving_amz_doc_wiki_v4_sentence_withent_ner30.yaml --parse --keep_order --target_dir MIX_Code_mixed_conll_rank_eos_doc_full_wiki_v4_test_sentence_withent --num_columns 4 --batch_size 32 --output_dir semeval2022_predictions 
 ```
+
+-
 
 #### Training the monolingual models
 
@@ -195,7 +202,7 @@ TODO
 
 #### Context Processing
 
----
+-
 
 ### Multi-stage Fine-tuning
 
@@ -207,9 +214,9 @@ In the config file, you can find:
 ```yaml
 ...
 train:
-	...
+	\...
 	save_finetuned_embedding: true
-	...
+	\...
 ...
 ```
 The code will save the fine-tuned embeddings at the end of each epoch when `save_finetuned_embedding` is set to `true`. In this case, you can find the saved embeddings at `resources/taggers/xlmr-large-pretuned-tuned-wiki-first_3epoch_1batch_4accumulate_0.000005lr_10000lrrate_multi_monolingual_crf_fast_norelearn_sentbatch_sentloss_nodev_finetune_saving_amz_doc_wiki_v3_ner24/xlm-roberta-large-ft10w`.
@@ -228,7 +235,7 @@ Run the model training:
 CUDA_VISIBLE_DEVICES=0 python train.py --config config/xlmr-large-pretuned-tuned-wiki-full-first_10epoch_1batch_4accumulate_0.000005lr_10000lrrate_en_monolingual_crf_fast_norelearn_sentbatch_sentloss_nodev_finetune_saving_amz_doc_wiki_v3_ner20.yaml
 ```
 
----
+-
 
 ### Majority Voting Ensemble
 
@@ -237,7 +244,7 @@ We provide an example of majority voting ensemble. Download the all English pred
 python ensemble_prediction.py 
 ```
 
----
+-
 
 ### (Optional) CE and ACE Models
 
@@ -285,6 +292,7 @@ train:
   ...
 ```
 
+---
 
 ## Config File
 
@@ -348,7 +356,7 @@ If you feel the CE and ACE models helpful:
 
 ## Acknowledgement
 
-Start from the great repo [flair version 0.4.3](https://github.com/flairNLP/flair), the code has been modified a lot. This code also supports our previous work such as multilingual knowledge distillation ([MultilangStructureKD](https://github.com/Alibaba-NLP/MultilangStructureKD)), automated concatenation of embeddings ([ACE](https://github.com/Alibaba-NLP/ACE)) and utilizing external contexts [CLNER](https://github.com/Alibaba-NLP/CLNER). You can also try these approaches in this repo.
+Start from the great repo [flair version 0.4.3](https://github.com/flairNLP/flair), the code has been modified a lot. This code also supports our previous work such as multilingual knowledge distillation ([MultilangStructureKD](https://github.com/Alibaba-NLP/MultilangStructureKD)), automated concatenation of embeddings ([ACE](https://github.com/Alibaba-NLP/ACE)) and utilizing external contexts ([CLNER](https://github.com/Alibaba-NLP/CLNER)). You can also try these approaches in this repo.
 
 ## Contact 
 
