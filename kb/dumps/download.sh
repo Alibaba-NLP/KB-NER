@@ -1,0 +1,11 @@
+wget --no-check-certificate https://dumps.wikimedia.org/bnwiki/latest/bnwiki-latest-pages-articles.xml.bz2
+wget --no-check-certificate https://dumps.wikimedia.org/dewiki/latest/dewiki-latest-pages-articles.xml.bz2
+wget --no-check-certificate https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles.xml.bz2
+wget --no-check-certificate https://dumps.wikimedia.org/eswiki/latest/eswiki-latest-pages-articles.xml.bz2
+wget --no-check-certificate https://dumps.wikimedia.org/fawiki/latest/fawiki-latest-pages-articles.xml.bz2
+wget --no-check-certificate https://dumps.wikimedia.org/hiwiki/latest/hiwiki-latest-pages-articles.xml.bz2
+wget --no-check-certificate https://dumps.wikimedia.org/kowiki/latest/kowiki-latest-pages-articles.xml.bz2
+wget --no-check-certificate https://dumps.wikimedia.org/nlwiki/latest/nlwiki-latest-pages-articles.xml.bz2
+wget --no-check-certificate https://dumps.wikimedia.org/ruwiki/latest/ruwiki-latest-pages-articles.xml.bz2
+wget --no-check-certificate https://dumps.wikimedia.org/trwiki/latest/trwiki-latest-pages-articles.xml.bz2
+wget --no-check-certificate https://dumps.wikimedia.org/zhwiki/latest/zhwiki-latest-pages-articles.xml.bz2
