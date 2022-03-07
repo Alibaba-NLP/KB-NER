@@ -18,9 +18,9 @@ KB-NER is a knowledge-based system, where we build a multilingual knowledge base
   - [Datasets](#datasets)
   - [Trained Models](#Trained-Models)
 - [Building Knowledge-based System](#Building-Knowledge-based-System)
-	- [Knowledge Base Building (**TODO**)](#Knowledge-Base-Building)
-	  - [Sentence Retrieval](#Sentence-Retrieval)
-	  - [Iterative Entity Retrieval](#Iterative-Entity-Retrieval)
+	- [Knowledge Base Building](#Knowledge-Base-Building)
+	  - [Index Building](#Index-Building)
+	  - [Retrieval-based Data Augmentation](#Retrieval-based-Data-Augmentation)
 	  - [Context Processing](#Context-Processing)
 	- [Multi-stage Fine-tuning](#Multi-stage-Fine-tuning)
 	- [Majority Voting Ensemble](#Majority-Voting-Ensemble)
@@ -198,13 +198,78 @@ CUDA_VISIBLE_DEVICES=0 python train.py --config config/xlmr-large-pretuned-tuned
 
 ### Knowledge Base Building
 
-TODO
+#### Index Building
 
-#### Sentence Retrieval
+Our wiki-based retrieval system is built on [ElasticSearch](https://www.elastic.co/), and you need to install ElasticSearch properly before you can build a knowledge base. For a tutorial on installation, please refer to this [link](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/targz.html).
 
-#### Iterative Entity Retrieval
+First you need to download the latest version of wiki dumps from [Wikimedia](https://www.wikimedia.org/) and store them in the lmdb database. You can run the following commands:
+
+```bash
+cd kb/dumps
+./download.sh
+./convert_db.sh
+```
+
+Then convert the files from xml format to plain text. Please run the command:
+
+```bash
+cd ..
+./parse_text.sh
+```
+
+Finally you can build the knowledge base through ElasticSearch, i.e. create indexes for 11 languages ( Note that you need to make sure that ElasticSearch is running and listening to the default port 9200 ):
+
+```bash
+./bulid_kb.sh
+```
+
+#### Retrieval-based Data Augmentation
+
+We provide two types of retrieval-based augmentations, one at the sentence level and one at the entity level. First you need to place the datasets in conll format under `kb/datasets`. Then run the following code as needed.
+
++ Sentence-level retrieval augmentation:
+
+  ```bash
+  python generate_data.py --lan en
+  ```
+
++ Entity-level retrieval augmentation:
+
+  ```bash
+  python generate_data.py --lan en --with_entity
+  ```
+
+Note that `--lan` specifies the language and `--with_entity` indicates whether to retrieve at entity level (default is false). 
+
+The retrieval results are presented in the following format. The first line is the original sentence and the entities in the sentence. Next are the 10 (default) most relevant retrieval results, one per row.
+
+```
+original sentence \t entity #1 | entity #2 ···
+retrieved sentence #1 \t associated paragraph #1 \t associated title #1 \t score #1 \t wiki url #1 \t hits on the sentence #1 ---#--- hits on the title #1
+retrieved sentence #2 \t associated paragraph #2 \t associated title #2 \t score #2 \t wiki url #2 \t hits on the sentence #2 ---#--- hits on the title #2
+···
+retrieved sentence #10 \t associated paragraph #10 \t associated title #10 \t score #10 \t wiki url #10 \t hits on the sentence #10 ---#---  hits on the title #10
+```
+
+Let's show an example:
+
+```
+anthology is a compilation album by new zealand singer songwriter and multi instrumentalist bic runga . compilation album | new zealand | bic runga 
+Anthology is a compilation album by New Zealand singer-songwriter and multi-instrumentalist Bic Runga.	Anthology is a <e:Compilation album>compilation album</e> by <e:New Zealand>New Zealand</e> singer-songwriter and multi-instrumentalist <e:Bic Runga>Bic Runga</e>. The album was initially set to be released on 23 November 2012, but ultimately released on 1 December 2012 in New Zealand. The album cover was revealed on 29 October 2012.	Anthology (Bic Runga album)	145.28241	https://en.wikipedia.org/wiki/Anthology (Bic Runga album)	<hit>Anthology</hit> <hit>is</hit> <hit>a</hit> <hit>compilation</hit> <hit>album</hit> <hit>by</hit> <hit>New</hit> <hit>Zealand</hit> <hit>singer</hit>-<hit>songwriter</hit> <hit>and</hit> <hit>multi</hit>-<hit>instrumentalist</hit> <hit>Bic</hit> <hit>Runga</hit> ---#--- Anthology (<hit>Bic</hit> <hit>Runga</hit> <hit>album</hit>)
+···
+```
+
+
+
+If you want to do iterative retrieval at entity level, please convert the model prediction to conll format and then perform entity level retrieval.
+
+
 
 #### Context Processing
+
+We consider the retrieved paragraphs as context and concatenate them after the original sentence.
+
+
 
 ---
 
