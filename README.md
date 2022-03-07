@@ -1,6 +1,6 @@
 # KB-NER: a Knowledge-based System for Multilingual Complex Named Entity Recognition
 
-The code is for the winner system (DAMO-NLP) of SemEval 2022 MultiCoNER shared task over 10 out of 13 tracks. [Rankings](https://multiconer.github.io/results), [Paper](https://arxiv.org/pdf/2203.00545.pdf).
+The code is for the winner system (DAMO-NLP) of SemEval 2022 MultiCoNER shared task over 10 out of 13 tracks. [[Rankings]](https://multiconer.github.io/results), [[Paper]](https://arxiv.org/pdf/2203.00545.pdf).
 
 KB-NER is a knowledge-based system, where we build a multilingual knowledge base based on Wikipedia to provide related context information to the NER model. 
 
