@@ -630,6 +630,7 @@ class SequenceTagger(flair.nn.Model):
 				log_line=f"{metric.precision()}\t{metric.recall()}\t{metric.micro_avg_f_score()}",
 				log_header="PRECISION\tRECALL\tF1",
 				detailed_results=detailed_result,
+				macro_score=metric.macro_avg_f_score(),
 			)
 
 			return result, eval_loss
@@ -2722,6 +2723,7 @@ class FastSequenceTagger(SequenceTagger):
 				log_line=f"{metric.precision()}\t{metric.recall()}\t{metric.micro_avg_f_score()}",
 				log_header="PRECISION\tRECALL\tF1",
 				detailed_results=detailed_result,
+				macro_score=metric.macro_avg_f_score(),
 			)
 
 			return result, eval_loss
