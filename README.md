@@ -44,11 +44,11 @@ pip install -r requirements.txt
 
 To ease the code
 
-Training and development data with retrieved knowledge: [OneDrive](https://1drv.ms/u/s!Am53YNAPSsodhO59bmCs05MulenL3Q?e=itf8yQ)
+Training and development data with retrieved knowledge: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO59bmCs05MulenL3Q?e=itf8yQ)
 
-Test data with retrieved knowledge: [OneDrive](https://1drv.ms/u/s!Am53YNAPSsodhO5-DrWR8jbDhVoZSQ?e=Xe7uwL)
+Test data with retrieved knowledge: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO5-DrWR8jbDhVoZSQ?e=Xe7uwL)
 
-Our model predictions submitted at the test phase: [OneDrive](https://1drv.ms/u/s!Am53YNAPSsodhO58074pzX2JMMvfrQ?e=ytwYsB). We believe the predictions can be used for distilling knowledge from our system.
+Our model predictions submitted at the test phase: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO58074pzX2JMMvfrQ?e=ytwYsB). We believe the predictions can be used for distilling knowledge from our system.
 
 
 #### Recommended Training and Testing Data for Each Language
@@ -70,9 +70,9 @@ Our model predictions submitted at the test phase: [OneDrive](https://1drv.ms/u/
 | MIX-Code_mixed | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v3_sentence | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v3_test_sentence |
 | MIX-Code_mixed (Iterative) | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v4_sentence_withent | MIX-Code_mixed_conll_rank_eos_doc_full_wiki_v4_test_sentence_withent |
 
-The meanning of the suffixes in the folder names are listed as follows:
+The meaning of the suffixes in the folder names are listed as follows:
 
-| Suffix | Meaning |
+| Suffix | Description |
 | -------------------------------  | ---  | 
 | `test` | Our test data with retrieved contexts from knowledge base|
 | `v3` | Contexts in the data are from sentence retrieval|
@@ -81,13 +81,13 @@ The meanning of the suffixes in the folder names are listed as follows:
 | `sentence_withent` | Using matched sentences with wiki anchors as the contexts (**Wiki-Sent** in the paper)|
 | w/o `sentence` and `sentence_withent` | Using matched paragraphs with wiki anchors as the contexts (**Wiki-Para** in the paper)|
 
-Note that in iterative entity retrieval datasets, the training data are using gold entities to retrieve knowledge while the test data (with 'test' in folder name) are using predicted entities (by our ensembled models based on sentence retrieval) for retrieval.
+Note that in iterative entity retrieval datasets, the training data are using gold entities to retrieve knowledge while the test data (with 'test' in the folder name) are using predicted entities (by our ensembled models based on sentence retrieval) for retrieval.
 
 ### Trained Models
 
-Since there 130+ trained models for our submission in the test phase, we only release our trained models for English (monolingual), Multilingual and Code-mixed. 
+Since there are 130+ trained models for our submission in the test phase, we only release our trained models for English (monolingual), Multilingual and Code-mixed. 
 
-Download link: [Uploading ...](), you may follow [Training and Testing on MultiCoNER Datasets](#training-and-testing-on-multiconer-datasets) to select the required trained models for downloading.
+Download link: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO8VUU-Bd4NE5Wb9SQ?e=w84xWo), you may follow [Training and Testing on MultiCoNER Datasets](#training-and-testing-on-multiconer-datasets) to select the required trained models for downloading.
 
 - Put the downloaded models into `resources/taggers`.
 
@@ -95,12 +95,12 @@ Download link: [Uploading ...](), you may follow [Training and Testing on MultiC
 
 ### Training and Testing on MultiCoNER Datasets
 
-This section is a guide for running our code with our trained models and processed datasts downloaded above. If you want to train and make predictions on your own datasets, please refer to [Building Knowledge-based System](#Building-Knowledge-based-System) for the guide about how to build the knowledge retrieval system and training your own knowledge-based models from scratch.
+This section is a guide for running our code with our trained models and processed datasets downloaded above. If you want to train and make predictions on your own datasets, please refer to [Building Knowledge-based System](#Building-Knowledge-based-System) for the guide about how to build the knowledge retrieval system and train your own knowledge-based models from scratch.
 
 #### Testing
 
 We provide four trained models for the three tracks, which are the candidates of the ensemble models of our submission.
-To make prediction with our trained models, run:
+To make predictions with our trained models, run:
 
 **For English**, `xlmr-large-pretuned-tuned-wiki-full-first_10epoch_1batch_4accumulate_0.000005lr_10000lrrate_en_monolingual_crf_fast_norelearn_sentbatch_sentloss_withdev_finetune_saving_amz_doc_wiki_v3_ner20` is required. Change the `data_folder` in the yaml file to the path to your downloaded datasets for all the configs. For example:
 ```yaml
@@ -135,7 +135,7 @@ CUDA_VISIBLE_DEVICES=0 python -u train.py --config config/xlmr-large-pretuned-tu
 
 `xlmr-large-pretuned-tuned-wiki-full-v4-first_100epoch_1batch_4accumulate_0.000005lr_10000lrrate_mix_monolingual_crf_fast_norelearn_sentbatch_sentloss_withdev_finetune_saving_amz_doc_wiki_v4_sentence_withent_ner30` is the model based on iterative entity retrieval.
 
-The sentence-retrieval-based models are used for predict entity mentions for the iterative entity retrieval. The iterative-entity-retrieval-based models are expected to be stronger than the sentence-retrieval-based models in code-mixed.
+The sentence-retrieval-based models are used to predict entity mentions for the iterative entity retrieval. The iterative-entity-retrieval-based models are expected to be stronger than the sentence-retrieval-based models in code-mixed.
 
 Run:
 ```bash
@@ -172,11 +172,11 @@ model_name: xlmr-large-pretuned-tuned-wiki-full-first_10epoch_1batch_4accumulate
 ```
 Please refer to [this table](#Recommended-Training-and-Testing-Data-for-Each-Language) to decide the training dataset for each language.
 
-**Note:** this model and the following two model are trained on both the training and development sets. As a result, the development F1 score should be about 100 during training.
+**Note:** this model and the following two models are trained on both the training and development sets. As a result, the development F1 score should be about 100 during training.
 
 #### Training the multilingual models
 
-Training multilingual models need to download `xlm-roberta-large-ft10w`, which is a continue pretrained model over the shared task data. Run:
+`xlm-roberta-large-ft10w` is required to train the multilingual models, which is a continue pretrained model over the shared task data. Run:
 ```bash
 CUDA_VISIBLE_DEVICES=0 python train.py --config config/xlmr-large-pretuned-tuned-wiki-first_3epoch_1batch_4accumulate_0.000005lr_10000lrrate_multi_monolingual_crf_fast_norelearn_sentbatch_sentloss_withdev_finetune_saving_amz_doc_wiki_v3_ner24.yaml
 ```
@@ -226,7 +226,7 @@ Finally you can build the knowledge base through ElasticSearch, i.e. create inde
 
 #### Retrieval-based Data Augmentation
 
-We provide two types of retrieval-based augmentations, one at the sentence level and one at the entity level. First you need to place the datasets in conll format under `kb/datasets`. Then run the following code as needed.
+We provide two types of retrieval-based augmentations, one at the sentence level and one at the entity level. First you need to place the datasets in CoNLL format under `kb/datasets`. Then run the following code as needed.
 
 + Sentence-level retrieval augmentation:
 
@@ -240,7 +240,7 @@ We provide two types of retrieval-based augmentations, one at the sentence level
   python generate_data.py --lan en --with_entity
   ```
 
-Note that `--lan` specifies the language and `--with_entity` indicates whether to retrieve at entity level (default is false). 
+Note that `--lan` specifies the language and `--with_entity` indicates whether to retrieve at the entity level (default is false). 
 
 The retrieval results are presented in the following format. The first line is the original sentence and the entities in the sentence. Next are the 10 (default) most relevant retrieval results, one per row.
 
@@ -270,7 +270,7 @@ In November 2008, Runga released Try to Remember Everything which is a collectio
 
 
 
-If you want to do iterative retrieval at entity level, please convert the model prediction to conll format and then perform entity level retrieval.
+If you want to do iterative retrieval at entity level, please convert the model predictions to conll format and then perform entity level retrieval.
 
 
 
@@ -284,7 +284,7 @@ We consider the retrieved paragraphs as context and concatenate them after the o
 
 ### Multi-stage Fine-tuning
 
-Taking the transferring from multilingual models to monolingual models as an examle, firstly we train a multilingual model (which is the same model as [Training the multilingual models](#Training-the-multilingual-models) but is trained only on the training data):
+Taking the transferring from multilingual models to monolingual models as an example, firstly we train a multilingual model (which is the same model as [Training the multilingual models](#Training-the-multilingual-models) but is trained only on the training data):
 ```bash
 CUDA_VISIBLE_DEVICES=0 python train.py --config config/xlmr-large-pretuned-tuned-wiki-first_3epoch_1batch_4accumulate_0.000005lr_10000lrrate_multi_monolingual_crf_fast_norelearn_sentbatch_sentloss_nodev_finetune_saving_amz_doc_wiki_v3_ner24.yaml
 ```
@@ -317,7 +317,7 @@ CUDA_VISIBLE_DEVICES=0 python train.py --config config/xlmr-large-pretuned-tuned
 
 ### Majority Voting Ensemble
 
-We provide an example of majority voting ensemble. Download the all English predictions at [here](https://1drv.ms/u/s!Am53YNAPSsodhO5_6HzQRzANirhltg?e=V6X6nw) and run:
+We provide an example of majority voting ensembling. Download the all English predictions at [here](https://1drv.ms/u/s!Am53YNAPSsodhO5_6HzQRzANirhltg?e=V6X6nw) and run:
 ```bash
 python ensemble_prediction.py 
 ```
@@ -361,7 +361,7 @@ embeddings:
 
 ```
 
-To run CE, you can change config like this: 
+To run CE, you can change the config like this: 
 ```yaml
 train:
   ...
@@ -433,7 +433,7 @@ If you feel the CE and ACE models helpful:
 
 ## Acknowledgement
 
-Start from the great repo [flair version 0.4.3](https://github.com/flairNLP/flair), the code has been modified a lot. This code also supports our previous work such as multilingual knowledge distillation ([MultilangStructureKD](https://github.com/Alibaba-NLP/MultilangStructureKD)), automated concatenation of embeddings ([ACE](https://github.com/Alibaba-NLP/ACE)) and utilizing external contexts ([CLNER](https://github.com/Alibaba-NLP/CLNER)). You can also try these approaches in this repo.
+Starting from the great repo [flair version 0.4.3](https://github.com/flairNLP/flair), the code has been modified a lot. This code also supports our previous work such as multilingual knowledge distillation ([MultilangStructureKD](https://github.com/Alibaba-NLP/MultilangStructureKD)), automated concatenation of embeddings ([ACE](https://github.com/Alibaba-NLP/ACE)) and utilizing external contexts ([CLNER](https://github.com/Alibaba-NLP/CLNER)). You can also try these approaches in this repo.
 
 ## Contact 
 
