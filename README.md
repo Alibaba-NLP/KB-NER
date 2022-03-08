@@ -276,9 +276,51 @@ If you want to do iterative retrieval at entity level, please convert the model 
 
 #### Context Processing
 
-We consider the retrieved paragraphs as context and concatenate them after the original sentence.
+Here we take `mix` as an example to generate contexts for the datasets.
+
+Usage:
+```bash
+$ python kb/context_process.py -h
+usage: train.py [-h] [--retrieval_file RETRIEVAL_FILE]
+                [--conll_folder CONLL_FOLDER] [--lang LANG] [--use_sentence]
+                [--use_paragraph_entity]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --retrieval_file RETRIEVAL_FILE
+                        The retrieved contexts from the knowledge base.
+  --conll_folder CONLL_FOLDER
+                        The data folder you want to generate contexts, the
+                        code will read train, dev, test data in the folder in
+                        conll formatting.
+  --lang LANG           The language code of the data, for example "en". We
+                        have specical processing for Chinese ("zh") and Code-
+                        mixed ("mix").
+  --use_sentence        use matched sentence in the retrieval results as the
+                        contexts
+  --use_paragraph_entity
+                        use matched sentence and the wiki anchor in the
+                        retrieval results as the contexts
+```
 
 
+Given the retrieved contexts and the conll data folder, run (generate contexts for **Wiki-Para**):
+```bash
+python kb/context_process.py --retrieval_file semeval_retrieve_res/mix.conll --conll_folder semeval_test/MIX_Code_mixed --lang mix
+```
+
+
+To generate contexts for **Wiki-Sent<sub>-link</sub>**, run:
+```bash
+python kb/context_process.py --retrieval_file semeval_retrieve_res/mix.conll --conll_folder semeval_test/MIX_Code_mixed --lang mix --use_sentence
+```
+
+To generate contexts for **Wiki-Sent**, run:
+```bash
+python kb/context_process.py --retrieval_file semeval_retrieve_res/mix.conll --conll_folder semeval_test/MIX_Code_mixed --lang mix --use_sentence --use_paragraph_entity
+```
+
+- **Note:** the file `semeval_retrieve_res/mix.conll` is the retrieval results for all the sets in `MIX_Code_mixed`. You may need to modify the code to satisfy your own requirements. For more details, you may read line 972-1002 and line 1005-1029.
 
 ---
 
