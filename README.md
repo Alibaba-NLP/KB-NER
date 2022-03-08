@@ -27,6 +27,7 @@ KB-NER is a knowledge-based system, where we build a multilingual knowledge base
 - [Acknowledgement](#Acknowledgement)
 - [Contact](#contact)
 
+
 ## Requirements
 To run our code, install:
 
