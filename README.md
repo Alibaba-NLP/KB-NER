@@ -4,10 +4,6 @@ The code is for the winner system (DAMO-NLP) of SemEval 2022 MultiCoNER shared t
 
 KB-NER is a knowledge-based system, where we build a multilingual knowledge base based on Wikipedia to provide related context information to the NER model. 
 
-<!-- ![image](https://user-images.githubusercontent.com/17926734/157019580-ec411abe-92ff-4144-a591-78b4b1d2f26c.png) ![image](https://user-images.githubusercontent.com/17926734/157019621-b3ff9734-f669-4c9b-80eb-8a70c75fd6fc.png | width=0.5\textwidth) -->
-
-<!-- <img src="https://user-images.githubusercontent.com/17926734/157019580-ec411abe-92ff-4144-a591-78b4b1d2f26c.png" width=500> <img src="https://user-images.githubusercontent.com/17926734/157019621-b3ff9734-f669-4c9b-80eb-8a70c75fd6fc.png" width=500> -->
-
 ![1646656832(1)](https://user-images.githubusercontent.com/17926734/157036466-289323ff-c57e-45d0-b960-50e12dea78e9.jpg)
 
 
@@ -89,7 +85,7 @@ Since there are 130+ trained models for our submission in the test phase, we onl
 
 Download link: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO8VUU-Bd4NE5Wb9SQ?e=w84xWo), you may follow [Training and Testing on MultiCoNER Datasets](#training-and-testing-on-multiconer-datasets) to select the required trained models for downloading.
 
-- Put the downloaded models into `resources/taggers`.
++ Put the downloaded models into `resources/taggers`.
 
 ---
 
@@ -320,7 +316,7 @@ To generate contexts for **Wiki-Sent**, run:
 python kb/context_process.py --retrieval_file semeval_retrieve_res/mix.conll --conll_folder semeval_test/MIX_Code_mixed --lang mix --use_sentence --use_paragraph_entity
 ```
 
-- **Note:** the file `semeval_retrieve_res/mix.conll` is the retrieval results for all the sets in `MIX_Code_mixed`. You may need to modify the code to satisfy your own requirements. For more details, you may read [line 972-1002](https://github.com/Alibaba-NLP/KB-NER/blob/63c1351c6cb4e7ce0041c2396d84e866f7d0daa3/kb/context_process.py#L972-L1002) and [line 1006-1029](https://github.com/Alibaba-NLP/KB-NER/blob/63c1351c6cb4e7ce0041c2396d84e866f7d0daa3/kb/context_process.py#L1006-L1029).
++ **Note:** the file `semeval_retrieve_res/mix.conll` is the retrieval results for all the sets in `MIX_Code_mixed`. You may need to modify the code to satisfy your own requirements. For more details, you may read [line 972-1002](https://github.com/Alibaba-NLP/KB-NER/blob/63c1351c6cb4e7ce0041c2396d84e866f7d0daa3/kb/context_process.py#L972-L1002) and [line 1006-1029](https://github.com/Alibaba-NLP/KB-NER/blob/63c1351c6cb4e7ce0041c2396d84e866f7d0daa3/kb/context_process.py#L1006-L1029).
 
 ---
 
