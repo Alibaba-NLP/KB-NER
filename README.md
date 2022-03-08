@@ -17,6 +17,7 @@ KB-NER is a knowledge-based system, where we build a multilingual knowledge base
 - [Quick Start](#quick-start)
   - [Datasets](#datasets)
   - [Trained Models](#Trained-Models)
+  - [Training and Testing on MultiCoNER Datasets](#training-and-testing-on-multiconer-datasets) 
 - [Building Knowledge-based System](#Building-Knowledge-based-System)
 	- [Knowledge Base Building](#Knowledge-Base-Building)
 	  - [Index Building](#Index-Building)
@@ -438,4 +439,4 @@ Start from the great repo [flair version 0.4.3](https://github.com/flairNLP/flai
 
 Feel free to email any questions or comments to issues or to [Xinyu Wang](http://wangxinyu0922.github.io/).
 
-For questions about the knowledge retrieval module, you can also ask [Yongliang Shen](mailto:syl@zju.edu.cn) and [Jiong Cai](mailto:caijiong@shanghaitech.edu.cn)
+For questions about the knowledge retrieval module, you can also ask [Yongliang Shen](mailto:syl@zju.edu.cn) and [Jiong Cai](mailto:caijiong@shanghaitech.edu.cn).
