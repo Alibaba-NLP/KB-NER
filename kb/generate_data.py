@@ -68,7 +68,7 @@ def search_batch(texts: List[str], size=10):
     return results
 
 def _clean_space(text):
-    match_regex = re.compile(u'[\u4e00-\u9fa5。，：《》、（）]{1} +(?<![a-zA-Z])')
+    match_regex = re.compile(u'[\u4e00-\u9fa5。，！：《》、（）]{1} +(?<![a-zA-Z])')
     should_replace_list = match_regex.findall(text)
     order_replace_list = sorted(should_replace_list,key=lambda i:len(i),reverse=True)
     for i in order_replace_list:
