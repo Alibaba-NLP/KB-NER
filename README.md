@@ -279,7 +279,7 @@ If you want to do iterative retrieval at entity level, please convert the model 
 Here we take `mix` as an example to generate contexts for the datasets.
 
 Usage:
-```bash
+```
 $ python kb/context_process.py -h
 usage: train.py [-h] [--retrieval_file RETRIEVAL_FILE]
                 [--conll_folder CONLL_FOLDER] [--lang LANG] [--use_sentence]
@@ -320,7 +320,7 @@ To generate contexts for **Wiki-Sent**, run:
 python kb/context_process.py --retrieval_file semeval_retrieve_res/mix.conll --conll_folder semeval_test/MIX_Code_mixed --lang mix --use_sentence --use_paragraph_entity
 ```
 
-- **Note:** the file `semeval_retrieve_res/mix.conll` is the retrieval results for all the sets in `MIX_Code_mixed`. You may need to modify the code to satisfy your own requirements. For more details, you may read line 972-1002 and line 1005-1029.
+- **Note:** the file `semeval_retrieve_res/mix.conll` is the retrieval results for all the sets in `MIX_Code_mixed`. You may need to modify the code to satisfy your own requirements. For more details, you may read [line 972-1002](https://github.com/Alibaba-NLP/KB-NER/blob/63c1351c6cb4e7ce0041c2396d84e866f7d0daa3/kb/context_process.py#L972-L1002) and [line 1006-1029](https://github.com/Alibaba-NLP/KB-NER/blob/63c1351c6cb4e7ce0041c2396d84e866f7d0daa3/kb/context_process.py#L1006-L1029).
 
 ---
 
