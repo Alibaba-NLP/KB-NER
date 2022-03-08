@@ -76,9 +76,9 @@ The meanning of the suffixes in the folder names are listed as follows:
 | `test` | Our test data with retrieved contexts from knowledge base|
 | `v3` | Contexts in the data are from sentence retrieval|
 | `v4` | Contexts in the data are from iterative entity retrieval| 
-| `sentence` | Using matched sentences as the contexts (`Wiki-Sent<sub>-link</sub>` in the paper)|
-| `sentence_withent` | Using matched sentences with wiki anchors as the contexts (`Wiki-Sent` in the paper)|
-| w/o `sentence` and `sentence_withent` | Using matched paragraphs with wiki anchors as the contexts (`Wiki-Para` in the paper)|
+| `sentence` | Using matched sentences as the contexts (**Wiki-Sent<sub>-link</sub>** in the paper)|
+| `sentence_withent` | Using matched sentences with wiki anchors as the contexts (**Wiki-Sent** in the paper)|
+| w/o `sentence` and `sentence_withent` | Using matched paragraphs with wiki anchors as the contexts (**Wiki-Para** in the paper)|
 
 Note that in iterative entity retrieval datasets, the training data are using gold entities to retrieve knowledge while the test data (with 'test' in folder name) are using predicted entities (by our ensembled models based on sentence retrieval) for retrieval.
 
@@ -86,7 +86,7 @@ Note that in iterative entity retrieval datasets, the training data are using go
 
 Since there 130+ trained models for our submission in the test phase, we only release our trained models for English (monolingual), Multilingual and Code-mixed. 
 
-Download link: [Uploading ...](), you may follow [Training and Testing on MultiCoNER Datasets](#Training-and-Testing-on-MultiCoNER-Datasets) to select the required trained models for downloading.
+Download link: [Uploading ...](), you may follow [Training and Testing on MultiCoNER Datasets](#training-and-testing-on-multiconer-datasets) to select the required trained models for downloading.
 
 - Put the downloaded models into `resources/taggers`.
 
