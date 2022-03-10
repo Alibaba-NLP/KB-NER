@@ -198,9 +198,9 @@ CUDA_VISIBLE_DEVICES=0 python train.py --config config/xlmr-large-pretuned-tuned
 
 #### Index Building
 
-Our wiki-based retrieval system is built on [ElasticSearch](https://www.elastic.co/), and you need to install ElasticSearch properly before you can build a knowledge base. For a tutorial on installation, please refer to this [link](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/targz.html).
+Our wiki-based retrieval system is built on [ElasticSearch](https://www.elastic.co/), and you need to install ElasticSearch properly before building knowledge bases. For a tutorial on installation, please refer to this [link](https://www.elastic.co/guide/en/elasticsearch/reference/7.10/targz.html). In addition, in order to make ElasticSearch support Chinese word segmentation, we recommend you to install [`ik-analyzer`](https://github.com/medcl/elasticsearch-analysis-ik).
 
-First you need to download the latest version of wiki dumps from [Wikimedia](https://www.wikimedia.org/) and store them in the lmdb database. You can run the following commands:
+After installing ElasticSearch, you can build your local multilingual wiki knowledge bases. First you need to download the latest version of wiki dumps from [Wikimedia](https://www.wikimedia.org/) and store them in the lmdb database. You can run the following commands:
 
 ```bash
 cd kb/dumps

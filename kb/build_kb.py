@@ -12,6 +12,7 @@ args = parser.parse_args()
 
 ES = "http://localhost:9200"
 INDEX_NAME = f"{args.lan}wiki_v1"
+HEADERS={'Accept': 'application/json', 'Content-type': 'application/json'}
 
 if args.lan == "zh":
     analyzer = 'ik_max'
@@ -34,8 +35,6 @@ CONFIG = {
     }
 }
 
-HEADERS = {"content-type": "application/json;charset=UTF-8"}
-
 PREFIX = "./dumps/"
 LAN = args.lan
 
@@ -57,7 +56,7 @@ def batch_iter(size=10000) -> Iterable[List[Dict]]:
 
 
 def add_copus():
-    res = requests.put(f"{ES}/{INDEX_NAME}", json=CONFIG)
+    res = requests.put(f"{ES}/{INDEX_NAME}", json=CONFIG, headers=HEADERS)
     if res.status_code != 200:
         print(json.dumps(res.json(), indent=2))
         raise RuntimeError("failed to create index mapping!")
@@ -87,8 +86,8 @@ def add_copus():
         print("success")
 
 def main():
-    r = requests.get(ES)
-    assert r.status_code == 200 and "tagline" in r.json()
+    r = requests.get(ES, headers=HEADERS)
+    assert r.status_code == 200
     add_copus()
     return
 
