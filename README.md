@@ -39,7 +39,7 @@ pip install -r requirements.txt
 
 ### Datasets
 
-To ease the code
+To ease the code running, please download our pre-processed datasets.
 
 Training and development data with retrieved knowledge: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO59bmCs05MulenL3Q?e=itf8yQ)
 
