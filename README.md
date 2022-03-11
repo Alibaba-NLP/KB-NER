@@ -278,7 +278,7 @@ Here we take `mix` as an example to generate contexts for the datasets.
 Usage:
 ```
 $ python kb/context_process.py -h
-usage: train.py [-h] [--retrieval_file RETRIEVAL_FILE]
+usage: context_process.py [-h] [--retrieval_file RETRIEVAL_FILE]
                 [--conll_folder CONLL_FOLDER] [--lang LANG] [--use_sentence]
                 [--use_paragraph_entity]
 
