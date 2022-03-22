@@ -15,7 +15,7 @@ INDEX_NAME = f"{args.lan}wiki_v1"
 HEADERS={'Accept': 'application/json', 'Content-type': 'application/json'}
 
 if args.lan == "zh":
-    analyzer = 'ik_max'
+    analyzer = 'ik_max_word'
     search_analyzer = 'ik_smart'
 else:
     analyzer = 'standard'
