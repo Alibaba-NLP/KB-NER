@@ -41,11 +41,11 @@ pip install -r requirements.txt
 
 To ease the code running, please download our pre-processed datasets.
 
-Training and development data with retrieved knowledge: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO59bmCs05MulenL3Q?e=itf8yQ)
+- **Training and development data with retrieved knowledge**: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO59bmCs05MulenL3Q?e=itf8yQ)
 
-Test data with retrieved knowledge: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO5-DrWR8jbDhVoZSQ?e=Xe7uwL)
+- **Test data with retrieved knowledge**: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO5-DrWR8jbDhVoZSQ?e=Xe7uwL)
 
-Our model predictions submitted at the test phase: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO58074pzX2JMMvfrQ?e=ytwYsB). We believe the predictions can be used for distilling knowledge from our system.
+- **Our model predictions submitted at the test phase**: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO58074pzX2JMMvfrQ?e=ytwYsB). We believe the predictions can be used for distilling knowledge from our system.
 
 
 #### Recommended Training and Testing Data for Each Language
@@ -84,9 +84,8 @@ Note that in iterative entity retrieval datasets, the training data are using go
 
 Since there are 130+ trained models for our submission in the test phase, we only release our trained models for English (monolingual), Multilingual and Code-mixed. 
 
-Download link: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO8VUU-Bd4NE5Wb9SQ?e=w84xWo), you may follow [Training and Testing on MultiCoNER Datasets](#training-and-testing-on-multiconer-datasets) to select the required trained models for downloading.
-
-+ Put the downloaded models into `resources/taggers`.
+- **Download link**: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhO8VUU-Bd4NE5Wb9SQ?e=w84xWo), you may follow [Training and Testing on MultiCoNER Datasets](#training-and-testing-on-multiconer-datasets) to select the required trained models for downloading.
+  + Put the downloaded models into `resources/taggers`.
 
 ---
 
