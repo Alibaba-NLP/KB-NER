@@ -25,7 +25,7 @@ embeddings:
   TransformerWordEmbeddings-0:
     fine_tune: true
     layers: '-1'
-    model: resources/taggers/xlmr-large-pretuned-tuned-wiki-first_3epoch_1batch_4accumulate_0.000005lr_10000lrrate_multi_monolingual_crf_fast_norelearn_sentbatch_sentloss_nodev_finetune_saving_amz_doc_wiki_v3_ner24/xlm-roberta-large-ft10w 
+    model: resources/taggers/xlmr-large-pretuned-tuned-new-first_3epoch_1batch_4accumulate_0.000005lr_10000lrrate_multi_monolingual_crf_fast_norelearn_sentbatch_sentloss_nodev_finetune_saving_amz_doc_wiki_v3_ner24/xlm-roberta-large-ft10w 
     pooling_operation: first
 interpolation: 0.5
 is_teacher_list: true
