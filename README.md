@@ -6,6 +6,9 @@ KB-NER is a knowledge-based system, where we build a multilingual knowledge base
 
 ![1646656832(1)](https://user-images.githubusercontent.com/17926734/157036466-289323ff-c57e-45d0-b960-50e12dea78e9.jpg)
 
+## News
+
+2022-05-04 Check our [ITA]() for multimodal named entity recognition!
 
 ## Guide
 
@@ -22,6 +25,7 @@ KB-NER is a knowledge-based system, where we build a multilingual knowledge base
 	- [Multi-stage Fine-tuning](#Multi-stage-Fine-tuning)
 	- [Majority Voting Ensemble](#Majority-Voting-Ensemble)
     - [(Optional) CE and ACE Models](#Optional-CE-and-ACE-Models)
+- [Predict files](#Predict-files)
 - [Config File](#Config-File)
 - [Citing Us](#Citing-Us)
 - [Acknowledgement](#Acknowledgement)
@@ -407,6 +411,20 @@ train:
   max_epochs: 300
   ...
 ```
+---
+
+## Predict files
+
+If you want to predict a certain file, add `train` in the file name and put the file in a certain `$dir` (for example, `parse_file_dir/train.your_file_name`). Run:
+
+```
+CUDA_VISIBLE_DEVICES=0 python train.py --config $config_file --parse --target_dir $dir --keep_order --batch_size $batch_size --output_dir $output_dir
+```
+
+If `$output_dir` is not specified the output file will be `outputs/`
+<!-- The format of the file should be `column_format={0: 'text', 1:'ner'}` for sequence labeling or you can modifiy line 337 in `train.py`. The parsed results will be in `outputs/`. -->
+Note that you may need to preprocess your file with the dummy tags for prediction, please check this [issue](https://github.com/Alibaba-NLP/ACE/issues/12) for more details.
+
 
 ---
 ## Config File
