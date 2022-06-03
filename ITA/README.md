@@ -12,11 +12,11 @@ The code is for our NAACL 2022 paper: [ITA: Image-Text Alignments for Multi-Moda
 
 ## Datasets
 
-Our preprocessed datasets: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhPEnSbEMTnsmdsiceg?e=f55rbp)
+**Our preprocessed datasets**: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhPEnSbEMTnsmdsiceg?e=f55rbp)
 
 ### Extract Texts on Your Own Datasets
 
-- **VinVL Features and Object labels**: please follow the guide in [scene_graph_benchmark](https://github.com/microsoft/scene_graph_benchmark#vinvl-feature-extraction).
+- **VinVL Features and Object Labels**: please follow the guide in [scene_graph_benchmark](https://github.com/microsoft/scene_graph_benchmark#vinvl-feature-extraction).
 
 - **Image Captions**: given the VinVL features, follow the guide in [VinVL](https://github.com/microsoft/Oscar/blob/master/VinVL_MODEL_ZOO.md) to extract the image captions. 
 
