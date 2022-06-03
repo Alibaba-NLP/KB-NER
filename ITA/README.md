@@ -16,11 +16,11 @@ Our preprocessed datasets: [[OneDrive]](https://1drv.ms/u/s!Am53YNAPSsodhPEnSbEM
 
 ### Extract Texts on Your Own Datasets
 
-To extract VinVL features and object labels, please follow the guide in [scene_graph_benchmark](https://github.com/microsoft/scene_graph_benchmark#vinvl-feature-extraction).
+- **VinVL Features and Object labels**: please follow the guide in [scene_graph_benchmark](https://github.com/microsoft/scene_graph_benchmark#vinvl-feature-extraction).
 
-Given the VinVL features, follow the guide in [VinVL](https://github.com/microsoft/Oscar/blob/master/VinVL_MODEL_ZOO.md) to extract the image captions. 
+- **Image Captions**: given the VinVL features, follow the guide in [VinVL](https://github.com/microsoft/Oscar/blob/master/VinVL_MODEL_ZOO.md) to extract the image captions. 
 
-To extract OCR texts, follow the guide in [Tesseract](https://github.com/tesseract-ocr/tesseract).
+- **OCR Texts**: please follow the guide in [Tesseract](https://github.com/tesseract-ocr/tesseract).
 
 ## Training
 
