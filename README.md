@@ -8,7 +8,7 @@ KB-NER is a knowledge-based system, where we build a multilingual knowledge base
 
 ## News
 
-2022-05-04 Check our [ITA](https://github.com/Alibaba-NLP/KB-NER/ITA) for multimodal named entity recognition!
+2022-05-04 Check our [ITA](https://github.com/Alibaba-NLP/KB-NER/tree/main/ITA) for multimodal named entity recognition!
 
 ## Guide
 
