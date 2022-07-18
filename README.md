@@ -8,7 +8,7 @@ KB-NER is a knowledge-based system, where we build a multilingual knowledge base
 
 ## News
 
-- 2022-07 Our [paper](https://arxiv.org/pdf/2203.00545.pdf) wins Best System Paper Award (top 0.45%=1/221) at SemEval 2022!
+- 2022-07 Our [paper](https://arxiv.org/pdf/2203.00545.pdf) wins the Best System Paper Award (top 0.45%=1/221) at SemEval 2022!
 - 2022-05 Check our [ITA](https://github.com/Alibaba-NLP/KB-NER/tree/main/ITA) for multimodal named entity recognition!
 
 ## Guide
