@@ -435,14 +435,27 @@ You can find the description of each part in the config file at [here](https://g
 ## Citing Us
 If you feel the code helpful, please cite:
 ```
-@article{wang2022damonlp,
-      title={{DAMO-NLP at SemEval-2022 Task 11: A Knowledge-based System for Multilingual Named Entity Recognition}}, 
-      author={Xinyu Wang and Yongliang Shen and Jiong Cai and Tao Wang and Xiaobin Wang and Pengjun Xie and Fei Huang and Weiming Lu and Yueting Zhuang and Kewei Tu and Wei Lu and Yong Jiang},
-      year={2022},
-      eprint={2203.00545},
-      url= {https://arxiv.org/abs/2112.06482},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+@inproceedings{wang-etal-2022-damo,
+    title = "{DAMO}-{NLP} at {S}em{E}val-2022 Task 11: A Knowledge-based System for Multilingual Named Entity Recognition",
+    author = "Wang, Xinyu  and
+      Shen, Yongliang  and
+      Cai, Jiong  and
+      Wang, Tao  and
+      Wang, Xiaobin  and
+      Xie, Pengjun  and
+      Huang, Fei  and
+      Lu, Weiming  and
+      Zhuang, Yueting  and
+      Tu, Kewei  and
+      Lu, Wei  and
+      Jiang, Yong",
+    booktitle = "Proceedings of the 16th International Workshop on Semantic Evaluation (SemEval-2022)",
+    month = jul,
+    year = "2022",
+    address = "Seattle, United States",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.semeval-1.200",
+    pages = "1457--1468",
 }
 
 @inproceedings{wang2021improving,
