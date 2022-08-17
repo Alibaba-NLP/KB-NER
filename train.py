@@ -204,7 +204,7 @@ elif args.parse or args.save_embedding:
 				name = name.replace('_v2doc','')
 			if '_extdoc' in name:
 				name = name.replace('_extdoc','')
-			embedding.tokenizer = AutoTokenizer.from_pretrained(name, do_lower_case=True)
+			embedding.tokenizer = AutoTokenizer.from_pretrained(name)
 		if hasattr(embedding,'model') and hasattr(embedding.model,'encoder') and not hasattr(embedding.model.encoder,'config'):
 			embedding.model.encoder.config = embedding.model.config
 	if args.remove_x:
