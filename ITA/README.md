@@ -4,6 +4,8 @@ The code is for our NAACL 2022 paper: [ITA: Image-Text Alignments for Multi-Moda
 
 **I**mage-**T**ext **A**lignments (ITA) aligns image features into the textual space so that the textual transformer-based embeddings can be fully utilized to model the interactions between images and texts.
 
+**Note**: Please use [KB-NER](https://github.com/Alibaba-NLP/KB-NER) for code running.
+
 ## Guide
 
 - [Datasets](#datasets)
