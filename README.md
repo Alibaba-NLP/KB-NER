@@ -7,6 +7,7 @@ KB-NER is a knowledge-based system, where we build a multilingual knowledge base
 ![1646656832(1)](https://user-images.githubusercontent.com/17926734/157036466-289323ff-c57e-45d0-b960-50e12dea78e9.jpg)
 
 ## News
+ - **2023-01**: Two strong baseline systems for SemEval 2023-MultiCoNER II are released in [AdaSeq](https://github.com/modelscope/AdaSeq/tree/master/examples/SemEval2023_MultiCoNER_II).
  - **2022-12**: New SOTA models ([MoRe](https://github.com/modelscope/AdaSeq/tree/master/examples/MoRe)) on multimodal named entity recognition and multimodal relation extraction are released! 
  - **2022-11**: [AdaSeq](https://github.com/modelscope/AdaSeq): An all-in-one and easy-to-use library for developing sequence understanding models is released. 
 - **2022-07** Our [paper](https://arxiv.org/pdf/2203.00545.pdf) wins the **Best System Paper Award** (top 0.45%=1/221) at SemEval 2022!
